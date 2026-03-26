@@ -93,12 +93,23 @@
       opacity: .7;
       visibility: visible;
     }
-  }
+}
 }
 
-.sidebar-inner {
+ .sidebar-overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
+     background: rgba(22,27,33,0.85);
+ }
+  .sidebar-inner {
   color: $grey-dark;
-  padding: $sidebar-padding 10px;
+  // Init Sidebar & TOC inner dimensions on all pages and for all schemes.
+  $offset = (($scheme == 'Pisces') or ($scheme == 'Gemini')) ? $sidebar-offset : $sidebar-padding;
+  max-height: 'calc(100vh - %s)' % unit($offset * 2, 'px');
+  padding: $sidebar-padding 0px;
   text-align: center;
   flex-column();
 }

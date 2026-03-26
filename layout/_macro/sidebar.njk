@@ -1,5 +1,6 @@
 {% macro render(display_toc) %}
   <aside class="sidebar">
+    <div class="sidebar-overlay"></div>
     {%- if display_toc %}
       {%- set toc = toc(page.content, {class: 'nav', list_number: page.toc.number, max_depth: page.toc.max_depth}) %}
       {%- set display_toc = toc.length > 1 and display_toc %}
@@ -76,5 +77,23 @@
         </div>
       {%- endif %}
     {%- endif %}
+
+    <div class="poem-side">
+      <div id="hitokoto">loading...</div>
+      <div id="hitokotofrom"></div>
+      <script defer>
+      fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+                   hitokoto.innerHTML = data.hitokoto
+           if(data.from_who != null) {
+             hitokotofrom.innerHTML ='——' + data.from_who + ' 《' + data.from + '》'
+           } else {
+             hitokotofrom.innerHTML ='——《' + data.from + '》'
+          }
+        })
+        .catch(console.error)
+    </script>
+    </div>
   </aside>
 {% endmacro %}
